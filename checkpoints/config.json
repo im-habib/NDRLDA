@@ -1,0 +1,164 @@
+{
+  "data": {
+    "data_dir": "data",
+    "primary_eeg_feature": "de_LDS",
+    "eog_method": "features_table_ica",
+    "eeg_channels": 17,
+    "forehead_channels": 0,
+    "frequency_bands": 5,
+    "eog_dim": 36,
+    "sample_rate_hz": 1.0,
+    "band_names": [
+      "delta",
+      "theta",
+      "alpha",
+      "beta",
+      "gamma"
+    ]
+  },
+  "preprocessing": {
+    "norm_method": "robust",
+    "smoothing_method": "lds",
+    "smoothing_window": 5,
+    "lds_transition_cov": 0.01,
+    "lds_observation_cov": 0.1,
+    "window_size": 10,
+    "window_stride": 1,
+    "use_pca": false,
+    "pca_components": 32,
+    "use_autoencoder": false,
+    "autoencoder_latent_dim": 32,
+    "autoencoder_lr": 0.001,
+    "autoencoder_epochs": 50
+  },
+  "env": {
+    "num_actions": 5,
+    "action_names": [
+      "No Alert",
+      "Soft Visual",
+      "Audio Warning",
+      "Strong Haptic+Audio",
+      "Emergency Rest"
+    ],
+    "alert_effect": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.25
+    ],
+    "alert_effect_decay": 0.9,
+    "max_episode_steps": 500,
+    "perclos_danger": 0.5,
+    "perclos_warning": 0.35,
+    "perclos_safe": 0.2
+  },
+  "reward": {
+    "tau_safe": 0.2,
+    "alpha_safety": 2.0,
+    "action_costs": [
+      0.0,
+      0.1,
+      0.3,
+      0.6,
+      1.0
+    ],
+    "beta_comfort": 0.5,
+    "gamma_efficiency": 0.3,
+    "trend_ema_alpha": 0.3,
+    "delta_trend": 0.5,
+    "alert_fatigue_patience": 10,
+    "zeta_alert_fatigue": 0.2,
+    "danger_zone_penalty": 1.0,
+    "recovery_bonus": 0.5,
+    "reward_smoothing_lambda": 0.8,
+    "perclos_danger": 0.5
+  },
+  "encoder": {
+    "encoder_type": "mlp",
+    "mlp_hidden_dims": [
+      256,
+      128
+    ],
+    "mlp_dropout": 0.1,
+    "cnn_channels": [
+      32,
+      64,
+      128
+    ],
+    "cnn_kernel_sizes": [
+      3,
+      3,
+      3
+    ],
+    "cnn_dropout": 0.1,
+    "attention_heads": 4,
+    "attention_dim": 128,
+    "attention_layers": 2,
+    "attention_dropout": 0.1
+  },
+  "temporal": {
+    "temporal_type": "lstm",
+    "lstm_hidden_size": 128,
+    "lstm_num_layers": 2,
+    "lstm_dropout": 0.1,
+    "lstm_bidirectional": false,
+    "transformer_d_model": 128,
+    "transformer_nhead": 4,
+    "transformer_num_layers": 2,
+    "transformer_dim_feedforward": 256,
+    "transformer_dropout": 0.1
+  },
+  "ppo": {
+    "total_timesteps": 500000,
+    "learning_rate": 0.0003,
+    "n_steps": 2048,
+    "batch_size": 64,
+    "n_epochs": 20,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "policy_hidden_dims": [
+      256,
+      128
+    ],
+    "value_hidden_dims": [
+      256,
+      128
+    ],
+    "activation": "tanh",
+    "ortho_init": true
+  },
+  "training": {
+    "seed": 42,
+    "device": "cpu",
+    "verbose": 1,
+    "test_subjects": [
+      1,
+      5,
+      10
+    ],
+    "val_ratio": 0.15,
+    "log_dir": "logs",
+    "checkpoint_dir": "checkpoints",
+    "use_tensorboard": true,
+    "save_every_n_steps": 50000,
+    "keep_last_n": 3,
+    "eval_freq": 10000,
+    "n_eval_episodes": 5
+  },
+  "evaluation": {
+    "results_dir": "results",
+    "danger_threshold": 0.5,
+    "latency_n_runs": 1000,
+    "latency_warmup": 50
+  },
+  "deployment": {
+    "export_dir": "deployment/exports",
+    "onnx_opset": 17,
+    "target_latency_ms": 10.0
+  }
+}

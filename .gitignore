@@ -158,7 +158,7 @@ ENV/
 env.bak/
 venv.bak/
 penv/
-
+penv.bak/
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -221,9 +221,6 @@ __marimo__/
 
 # NDRLDA project outputs
 data/
-checkpoints/
 logs/
-evaluation_results/
-deployment_artifacts/
 venv
 penv

@@ -12,9 +12,9 @@ Usage:
     python simulate.py --export-onnx             # also export ONNX model
 """
 
-import argparse
 import json
 import logging
+import argparse
 from pathlib import Path
 
 from stable_baselines3 import PPO
@@ -131,3 +131,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

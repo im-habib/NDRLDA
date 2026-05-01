@@ -181,7 +181,7 @@ class Trainer:
         self.agent.learn(
             total_timesteps=self.cfg.ppo.total_timesteps,
             callback=CallbackList(callbacks),
-            progress_bar=True,
+            progress_bar=False,
         )
 
         # Summary

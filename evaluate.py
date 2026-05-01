@@ -107,14 +107,54 @@ def main():
     # Plots
     if args.plot:
         plotter = VigilancePlotter(cfg)
+        histories = [r["history"] for r in results["per_subject"]]
+        metrics = [r["metrics"] for r in results["per_subject"]]
+        subject_ids = [r["subject_id"] for r in results["per_subject"]]
+        plot_dir = output_dir / "plots"
+
         for r in results["per_subject"]:
             plotter.plot_subject_trajectory(
                 r["history"], r["subject_id"],
-                save_dir=output_dir / "plots",
+                save_dir=plot_dir,
+            )
+            plotter.plot_subject_dashboard(
+                r["history"], r["subject_id"],
+                metrics=r["metrics"],
+                save_dir=plot_dir,
             )
         plotter.plot_cross_subject_summary(
             results["aggregated"],
-            save_dir=output_dir / "plots",
+            save_dir=plot_dir,
+            subject_ids=subject_ids,
+        )
+        plotter.plot_intervention_heatmap(
+            histories,
+            save_dir=plot_dir,
+            subject_ids=subject_ids,
+        )
+        plotter.plot_perclos_heatmap(
+            histories,
+            save_dir=plot_dir,
+            subject_ids=subject_ids,
+        )
+        plotter.plot_action_distribution(
+            histories,
+            save_dir=plot_dir,
+            subject_ids=subject_ids,
+        )
+        plotter.plot_perclos_distribution(
+            histories,
+            save_dir=plot_dir,
+            subject_ids=subject_ids,
+        )
+        plotter.plot_metric_radar(
+            results["aggregated"],
+            save_dir=plot_dir,
+        )
+        plotter.plot_policy_tradeoff(
+            metrics,
+            save_dir=plot_dir,
+            subject_ids=subject_ids,
         )
 
     logger.info("Evaluation complete.")
