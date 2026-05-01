@@ -152,10 +152,12 @@ activemq-data/
 .envrc
 .venv
 env/
+!environment/
 venv/
 ENV/
 env.bak/
 venv.bak/
+penv/
 
 # Spyder project settings
 .spyderproject
@@ -216,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# NDRLDA project outputs
+data/
+checkpoints/
+logs/
+evaluation_results/
+deployment_artifacts/
+venv
+penv
